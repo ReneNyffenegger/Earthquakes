@@ -5,7 +5,7 @@ use strict;
 use LWP::Simple;
 
 for my $year (2010 .. 2016) {
-  download("$year-01-01 00:00:00", "$year-31-21 23:59:59", 4.5, "${year}_4.5.csv");
+  download("$year-01-01 00:00:00", "$year-12-31 23:59:59", 4.5, "${year}_4.5.csv");
 }
 
 sub download { #_{
@@ -26,13 +26,12 @@ sub download { #_{
 
   my $params='';
 
-  $params = "starttime=$start_time";
-  $params = "&endtime=$end_time";
-  $params = "&minmagnitude=$min_magnitude";
-  $params = "&orderby=time-asc";
+  $params  = "starttime=$start_time";
+  $params .= "&endtime=$end_time";
+  $params .= "&minmagnitude=$min_magnitude";
+  $params .= "&orderby=time-asc";
 
   my $url = "https://earthquake.usgs.gov/fdsnws/event/1/query.csv?$params";
-  # starttime=2010-01-01%2000:00:00&endtime=2016-01-01%2000:00:00&minmagnitude=4.5&orderby=time-asc
   
   print "downloading $params to $filename_\n";
   getstore($url, $filename);
